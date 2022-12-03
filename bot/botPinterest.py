@@ -1,4 +1,3 @@
-
 import random
 from py3pin.Pinterest import Pinterest
 import mysql.connector

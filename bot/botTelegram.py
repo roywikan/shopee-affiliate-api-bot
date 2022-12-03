@@ -19,14 +19,13 @@ def autoPostingTelegram():
   database_post = mycursor.fetchall()
 
   shopeid =1
-
   random_index = random.randrange(len(database_post))
 
-  # Post Telegram
   try:
     statusTelegram = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "racunshopee", "Telegram" ))
     message = 'https://api.telegram.org/bot5479078966:AAECnT7JEy4hNpjHGUzdZtSTsgOOjN22O_8/sendPhoto?chat_id=-1001658353827&photo={}&caption={}'.format(database_post[random_index]['product_img'], statusTelegram)
     requests.post(message)
+    print("✅ - Posting Berhasil")
   except:
     pass
       

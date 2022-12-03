@@ -24,7 +24,7 @@ def autoPostingFacebook():
     statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],shopeid, "idmyfashion", "Facebook" ))
     # post_url = 'https://graph.facebook.com/{}/feed'.format(page_id_1)
     post_url = 'https://graph.facebook.com/v5.0/{}/photos'.format(page_id)
-    imgUrl = database_post[random_index][4]
+    imgUrl = database_post[random_index]['product_img']
 
     payload = {
         'message': statusTweet,

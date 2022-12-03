@@ -15,7 +15,6 @@ mydb = mysql.connector.connect(
   database="shopee_aff"
 )
 
-
 idDataBaseItem = '15JVk3QaMzRIzvXGq8KNgUO4i6RFyG12h0BXUKlrFf2Q'
 db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/export?format=csv")
 
@@ -131,17 +130,21 @@ def autoRepostNonEleved() :
         API = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
         print("Account : {}".format(account['username']))
 
-        for index in range(3):
-            try :
-                random_index = random.randrange(len(tweets))
-                API.unretweet(source_tweet_id =tweets[random_index].id)
-                API.retweet(tweet_id=tweets[random_index].id)
-                print("✅ - Repost Berhasil")
-                API.like(tweet_id=tweets[random_index].id)
-            except twitter.TweepyException as e:
-                pass
-                print(e)
-       
+        totalRetweet = 3
+        for index in tweets:
+            if totalRetweet != 0:
+                try :
+                    random_index = random.randrange(len(tweets))
+                    API.unretweet(source_tweet_id =tweets[random_index].id)
+                    API.retweet(tweet_id=tweets[random_index].id)
+                    print("✅ - Repost Berhasil")
+                    API.like(tweet_id=tweets[random_index].id)
+                except twitter.TweepyException as e:
+                    pass
+                    print(e)
+            else:
+                break
+                
 
 def autopostingAkunBackUp():
     mycursor = mydb.cursor(dictionary=True)
@@ -154,7 +157,7 @@ def autopostingAkunBackUp():
     for account in accountResult:
         random_index = random.randrange(len(database_post))
 
-        urllib.request.urlretrieve('{}'.format(database_post[random_index][4]), "imagePost.png")
+        urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
             
         media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
 
@@ -164,7 +167,7 @@ def autopostingAkunBackUp():
         )
         api = twitter.API(auth)
 
-        statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['username'] , "Twitter" ))
+        statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
 
         try:
             api.update_status(status=statusTweet, media_ids=[media.media_id])
@@ -173,7 +176,7 @@ def autopostingAkunBackUp():
         except:
             pass   
            
-
+# Repost akun backUp Ayah ke masitowae
 def autoRepostAkunAyah() :
     userIDaccount = "masitowae"
     tweets = botTwitter().user_timeline(screen_name=userIDaccount, count=100, include_rts=False, tweet_mode='extended')
@@ -191,17 +194,22 @@ def autoRepostAkunAyah() :
 
         print("Account : {}".format(account['username']))
 
-        for index in range(2):
-            try :
-                random_index = random.randrange(len(tweets))
-                api.unretweet(id =tweets[random_index].id)
-                api.retweet(id=tweets[random_index].id)
-                print("✅ - Repost Berhasil")
-            except twitter.TweepyException as e:
-                pass
-                print(e)
+        totalRetweet = 2
+        for index in tweets:
+            if totalRetweet != 0:
+                try :
+                    random_index = random.randrange(len(tweets))
+                    api.unretweet(id =tweets[random_index].id)
+                    api.retweet(id=tweets[random_index].id)
+                    print("✅ - Repost Berhasil")
+                    totalRetweet = totalRetweet - 1
+                except twitter.TweepyException as e:
+                    pass
+                    print(e) 
+            else:
+                break
                 
- 
+
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))

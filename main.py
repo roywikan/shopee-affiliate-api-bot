@@ -7,14 +7,10 @@ from bot.botTelegram import *
 
 # Twitter
 schedule.every(15).minutes.do(autoposting)
-schedule.every(35).minutes.do(autopostingBackup)
-schedule.every(10).minutes.do(retweetSecAccount) 
 schedule.every(10).minutes.do(autoRetweetNonEleved)
-schedule.every(15).minutes.do(autorepostNonEleved)
-schedule.every(30).minutes.do(postingPinterest)
-schedule.every(60).minutes.do(statusBot)
-schedule.every(30).minutes.do(autopostingAkunBackUp)
-schedule.every(20).minutes.do(autorepostAkunAyah)
+schedule.every(18).minutes.do(autoRepostNonEleved)
+schedule.every(25).minutes.do(autopostingAkunBackUp)
+schedule.every(20).minutes.do(autoRepostAkunAyah)
 
 # Telegram
 schedule.every(30).minutes.do(autoPostingTelegram)

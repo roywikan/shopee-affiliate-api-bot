@@ -1,13 +1,6 @@
-import tweepy as twitter
-import time
-from datetime import datetime
 import pandas as pd
 import random
-import urllib.request
-from PIL import Image
 import requests
-import schedule
-from py3pin.Pinterest import Pinterest
 import mysql.connector
 
 # Connect Database
@@ -19,29 +12,31 @@ mydb = mysql.connector.connect(
 )
 
 def autoPostingTelegram():
-    print("\n\n🟧 AUTO POSTING : {}\n".format(datetime.now()))
+  print("\n🟧 AUTO POSTING")
 
-    mycursor = mydb.cursor()
+  mycursor = mydb.cursor(dictionary=True)
+  mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
+  database_post = mycursor.fetchall()
 
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_eleved")
+  shopeid =1
 
-    accountResult = mycursor.fetchall()
+  random_index = random.randrange(len(database_post))
 
-    mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
+  # Post Telegram
+  try:
+    statusTelegram = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "racunshopee", "Telegram" ))
+    message = 'https://api.telegram.org/bot5479078966:AAECnT7JEy4hNpjHGUzdZtSTsgOOjN22O_8/sendPhoto?chat_id=-1001658353827&photo={}&caption={}'.format(database_post[random_index]['product_img'], statusTelegram)
+    requests.post(message)
+  except:
+    pass
+      
+def shortLinkShopee(link, idshopee, akun, sosialmedia):
+  mycursor = mydb.cursor(dictionary=True)
+  mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))
+  account_shopee = mycursor.fetchall()
 
-    database_post = mycursor.fetchall()
-
-    shopeid =1
-
-    random_index = random.randrange(len(database_post))
-
-    # upload image
-    urllib.request.urlretrieve('{}'.format(database_post[random_index][4]), "imagePost.png")
-
-    # Post Telegram
-    try:
-        statusTelegram = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index][0], database_post[random_index][2], shortLinkShopee(database_post[random_index][3], shopeid, "racunshopee", "Telegram" ))
-        message = 'https://api.telegram.org/bot5479078966:AAECnT7JEy4hNpjHGUzdZtSTsgOOjN22O_8/sendPhoto?chat_id=-1001658353827&photo={}&caption={}'.format(database_post[random_index][4], statusTelegram)
-        requests.post(message)
-    except:
-        pass
+  from shopee_affiliate import ShopeeAffiliate    
+  sa = ShopeeAffiliate(account_shopee[0]['appid'], account_shopee[0]['rahasia'])
+  res = sa.generateShortLink(link, akun, sosialmedia)
+  res = res.replace("shope", "shpe")
+  return(res)

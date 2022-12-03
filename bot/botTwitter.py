@@ -139,6 +139,7 @@ def autoRepostNonEleved() :
                     API.retweet(tweet_id=tweets[random_index].id)
                     print("✅ - Repost Berhasil")
                     API.like(tweet_id=tweets[random_index].id)
+                    totalRetweet = totalRetweet - 1
                 except twitter.TweepyException as e:
                     pass
                     print(e)

@@ -47,23 +47,26 @@ def autoposting():
     shopeid =1
 
     for account in accountResult:
-        auth = twitter.OAuthHandler(account['API_KEY'], account['API_SECRET_KEY'])
-        auth.set_access_token(account['ACCESS_TOKEN'], account['SECRET_ACCESS_TOKEN'])
-        api = twitter.API(auth)
+        try :
+            auth = twitter.OAuthHandler(account['API_KEY'], account['API_SECRET_KEY'])
+            auth.set_access_token(account['ACCESS_TOKEN'], account['SECRET_ACCESS_TOKEN'])
+            api = twitter.API(auth)
 
-        profile = api.update_profile()
-        print("\nAccount : {}".format(profile.name) + " ({})".format(profile.screen_name))
+            profile = api.update_profile()
+            print("\nAccount : {}".format(profile.name) + " ({})".format(profile.screen_name))
 
-        random_index = random.randrange(len(database_post))
+            random_index = random.randrange(len(database_post))
 
-        # Download Image
-        urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
+            # Download Image
+            urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
 
-        try:
-            statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "idmyfashion", "Twitter" ))
-            media = api.media_upload("imagePost.png")
-            api.update_status(status=statusTweet, media_ids=[media.media_id])
-            print("✅ - Posting Berhasil")
+            try:
+                statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "idmyfashion", "Twitter" ))
+                media = api.media_upload("imagePost.png")
+                api.update_status(status=statusTweet, media_ids=[media.media_id])
+                print("✅ - Posting Berhasil")
+            except:
+                pass
         except:
             pass
         
@@ -157,25 +160,28 @@ def autopostingAkunBackUp():
 
     for account in accountResult:
         random_index = random.randrange(len(database_post))
-
-        urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
-            
-        media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
-
-        auth = twitter.OAuth1UserHandler(
-            "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
-            account['access_token'], account['access_token_secret']
-        )
-        api = twitter.API(auth)
-
-        statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
-
+        
         try:
-            api.update_status(status=statusTweet, media_ids=[media.media_id])
-            print(account['username'])
-            print("✅ - Posting Berhasil\n")
+            urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
+                
+            media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
+
+            auth = twitter.OAuth1UserHandler(
+                "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
+                account['access_token'], account['access_token_secret']
+            )
+            api = twitter.API(auth)
+
+            statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
+
+            try:
+                api.update_status(status=statusTweet, media_ids=[media.media_id])
+                print(account['username'])
+                print("✅ - Posting Berhasil\n")
+            except:
+                pass   
         except:
-            pass   
+            pass
            
 # Repost akun backUp Ayah ke masitowae
 def autoRepostAkunAyah() :

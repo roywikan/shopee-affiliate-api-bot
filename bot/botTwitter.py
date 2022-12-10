@@ -2,7 +2,6 @@ import tweepy as twitter
 import pandas as pd
 import random
 import urllib.request
-from PIL import Image
 import requests
 import schedule
 import mysql.connector

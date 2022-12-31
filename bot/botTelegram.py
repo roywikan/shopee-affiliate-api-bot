@@ -43,5 +43,3 @@ def shortLinkShopee(link, idshopee, akun, sosialmedia):
   res = sa.generateShortLink(link, akun, sosialmedia)
   res = res.replace("shope", "shpe")
   return(res)
-
-autoPostingTelegram()

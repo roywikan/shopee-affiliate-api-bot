@@ -19,16 +19,20 @@ def autoPostingTelegram():
   database_post = mycursor.fetchall()
 
   shopeid =1
-  random_index = random.randrange(len(database_post))
+  
+  idChannelTelegrams = ['-1001658353827', '-1001866060533']
 
-  try:
-    statusTelegram = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "racunshopee", "Telegram" ))
-    message = 'https://api.telegram.org/bot5479078966:AAECnT7JEy4hNpjHGUzdZtSTsgOOjN22O_8/sendPhoto?chat_id=-1001658353827&photo={}&caption={}'.format(database_post[random_index]['product_img'], statusTelegram)
-    requests.post(message)
-    print("✅ - Posting Berhasil")
-  except:
-    pass
-      
+  for channelTelegram in idChannelTelegrams:
+    try:
+        random_index = random.randrange(len(database_post))
+        statusTelegram = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "racunshopee", "Telegram" ))
+        message = 'https://api.telegram.org/bot5479078966:AAECnT7JEy4hNpjHGUzdZtSTsgOOjN22O_8/sendPhoto?chat_id={}&photo={}&caption={}'.format(channelTelegram, database_post[random_index]['product_img'], statusTelegram)
+        requests.post(message)
+
+        print("✅ - Posting Berhasil")
+    except:
+        pass
+
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
   mycursor = mydb.cursor(dictionary=True)
   mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))
@@ -39,3 +43,5 @@ def shortLinkShopee(link, idshopee, akun, sosialmedia):
   res = sa.generateShortLink(link, akun, sosialmedia)
   res = res.replace("shope", "shpe")
   return(res)
+
+autoPostingTelegram()

@@ -94,7 +94,7 @@ def autoRetweetNonEleved():
             print(e)
     
     # Sementara
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND username='sarhagthang' OR username='Donni_darwin' OR username='alviliaa_' OR username='aqillaaurelliaa' OR username='cantika_vela' OR username='HappyRacun'")
+    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND username='sarhagthang' OR username='Donni_darwin' OR username='alviliaa_' OR username='aqillaaurelliaa' OR username='cantika_vela' OR username='HappyRacun' OR username='aneisha_4'")
     accountResult = mycursor.fetchall()
 
     for account in accountResult:

@@ -60,7 +60,7 @@ def autoposting():
             urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
 
             try:
-                statusTweet = "‼ SUPER FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "idmyfashion", "Twitter" ))
+                statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'], shopeid, "idmyfashion", "Twitter" ))
                 media = api.media_upload("imagePost.png")
                 api.update_status(status=statusTweet, media_ids=[media.media_id])
                 print("✅ - Posting Berhasil")
@@ -171,7 +171,7 @@ def autopostingAkunBackUp():
             )
             api = twitter.API(auth)
 
-            statusTweet = "‼ SUPER DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
+            statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
 
             try:
                 api.update_status(status=statusTweet, media_ids=[media.media_id])

@@ -215,7 +215,55 @@ def autoRepostAkunAyah() :
             else:
                 break
                 
+def autopostingTrendingTopik():
+    API = botTwitter()
 
+    #Scrap Trending ======================================================
+    WOEID = 1047378
+
+    top_trends = API.get_place_trends(WOEID)
+
+    final = []
+
+    for i in range(len(top_trends[0]['trends'])):
+        # if(top_trends[0]['trends'][i]['tweet_volume']):
+        name = top_trends[0]['trends'][i]['name']
+        volume = top_trends[0]['trends'][i]['tweet_volume']
+        final.append([name,volume])
+    
+    trending = ""
+
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE username='HappyRacun'")
+    accountResult = mycursor.fetchall()
+
+    mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
+    database_post = mycursor.fetchall()
+
+    for i in range(len(accountResult)):
+        random_index = random.randrange(len(database_post))
+        urllib.request.urlretrieve('{}'.format(database_post[random_index][4]), "imagePost.png")
+        media = API.media_upload("imagePost.png", additional_owners=[accountResult[i][1]])
+
+        auth = twitter.OAuth1UserHandler(
+            "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
+            accountResult[i][3], accountResult[i][4]
+        )
+        api = twitter.API(auth)
+
+        for x in range(10):
+            random_index_trending = random.randrange(len(final))
+            trending += " " + final[random_index_trending][0]
+
+        statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}\n\ntag:{}".format(database_post[random_index][0], database_post[random_index][2], shortLinkShopee(database_post[random_index][3],accountResult[i][0], accountResult[i][1] , "Twitter" ), trending)
+        
+        try:
+            api.update_status(status=statusTweet, media_ids=[media.media_id])
+            print(accountResult[i][2])
+            print("✅ - Posting Berhasil\n")
+        except:
+            pass
+        
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
     mycursor = mydb.cursor(dictionary=True)
     mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))

@@ -13,6 +13,7 @@ schedule.every(30).minutes.do(autoRetweetNonEleved)
 schedule.every(18).minutes.do(autoRepostNonEleved)
 schedule.every(25).minutes.do(autopostingAkunBackUp)
 schedule.every(20).minutes.do(autoRepostAkunAyah)
+schedule.every(45).minutes.do(autopostingTrendingTopik)
 
 # Twitter - post video
 schedule.every(200).minutes.do(postingVideo)
@@ -32,3 +33,4 @@ schedule.every(30).minutes.do(autoPostingFacebook)
 while True:
     schedule.run_pending()
     time.sleep(1)
+    

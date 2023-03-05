@@ -8,14 +8,14 @@ from bot.botReplyTwitter import *
 from bot.postVideoTwiiter import * 
 
 # Twitter
-schedule.every(15).minutes.do(autoposting)
+schedule.every(25).minutes.do(autoposting)
 schedule.every(30).minutes.do(autoRetweetNonEleved)
 schedule.every(18).minutes.do(autoRepostNonEleved)
 schedule.every(25).minutes.do(autopostingAkunBackUp)
 schedule.every(20).minutes.do(autoRepostAkunAyah)
 
 # Twitter - post video
-schedule.every(150).minutes.do(postingVideo)
+schedule.every(200).minutes.do(postingVideo)
 
 # Reply Twitter
 schedule.every(30).minutes.do(posting)

@@ -6,8 +6,8 @@ import json
 # export 'CONSUMER_KEY'='<your_consumer_key>'
 # export 'CONSUMER_SECRET'='<your_consumer_secret>'
 
-consumer_key = "TDsus5T6nqDikv70sNR3lkxx6"
-consumer_secret = "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp"
+consumer_key = os.environ['API_KEY']
+consumer_secret = os.environ['API_SECRET_KEY']
 
 # Be sure to add replace the text of the with the text you wish to Tweet. You can also add parameters to post polls, quote Tweets, Tweet with reply settings, and Tweet to Super Followers in addition to other features.
 

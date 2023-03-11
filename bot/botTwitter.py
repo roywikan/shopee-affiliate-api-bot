@@ -5,6 +5,7 @@ import urllib.request
 import requests
 import schedule
 import mysql.connector
+import os
 
 # Connect Database
 mydb = mysql.connector.connect(
@@ -19,11 +20,11 @@ db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/expor
 
 # API BotTwitter
 def botTwitter():
-    API_KEY = "TDsus5T6nqDikv70sNR3lkxx6"
-    API_SECRET_KEY = "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp"
-    BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAAFrcgEAAAAAzx0z5tcY43qve6JUby%2BJeU5kCwM%3DkXHXPkdCE7hhnRtfCDr44dBIcNTy25lfPnUqQ3QMklgfpQXJAl"
-    ACCESS_TOKEN = "975213506696855553-T4nK2ZGtevzbt5aHi59P3ejjasZtHof"
-    SECRET_ACCESS_TOKEN = "CsEmqJBTrGFrMwEKjCSwaqXWuW4Y77x5QOXjyeYjfUhd3"
+    API_KEY = os.environ['API_KEY']
+    API_SECRET_KEY = os.environ['API_SECRET_KEY']
+    BEARER_TOKEN = os.environ['BEARER_TOKEN']
+    ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+    SECRET_ACCESS_TOKEN = os.environ['SECRET_ACCESS_TOKEN']
     
     auth = twitter.OAuthHandler(API_KEY,  API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, SECRET_ACCESS_TOKEN)
@@ -99,7 +100,7 @@ def autoRetweetNonEleved():
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
-            "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
+            os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)
@@ -166,7 +167,7 @@ def autopostingAkunBackUp():
             media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
 
             auth = twitter.OAuth1UserHandler(
-                "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
+                os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
                 account['access_token'], account['access_token_secret']
             )
             api = twitter.API(auth)
@@ -193,7 +194,7 @@ def autoRepostAkunAyah() :
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
-            "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
+            os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)
@@ -246,7 +247,7 @@ def autopostingTrendingTopik():
         media = API.media_upload("imagePost.png", additional_owners=[accountResult[i][1]])
 
         auth = twitter.OAuth1UserHandler(
-            "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
+            os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)

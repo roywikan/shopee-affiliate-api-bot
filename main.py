@@ -10,4 +10,3 @@ schedule.every(45).minutes.do(autopostingTrendingTopik)
 while True:
     schedule.run_pending()
     time.sleep(1)
-    

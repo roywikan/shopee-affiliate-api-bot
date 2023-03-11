@@ -14,16 +14,13 @@ mydb = mysql.connector.connect(
   database="shopee_aff"
 )
 
-idDataBaseItem = '15JVk3QaMzRIzvXGq8KNgUO4i6RFyG12h0BXUKlrFf2Q'
-db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/export?format=csv")
-
 # API BotTwitter
 def botTwitter():
-    API_KEY = "l8QEIHkBbb7Zpviv7ggt4XNpi"
-    API_SECRET_KEY = "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N"
-    BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAAFrcgEAAAAADBt2zOc80n%2B6VnrIFjKzMwfhP%2B4%3DexqN2RgSuElNEqmOgdH6vecjFDoX1XTYHOGvGqfHrvjE5vke37"
-    ACCESS_TOKEN = "975213506696855553-UcOW4U41SPc5XgwylP1FnHeYLKbTR9N"
-    SECRET_ACCESS_TOKEN = "kQM4qyISdaPrRBFOjb0zfRpUKMdmG7UBXpgrDNDrxQs5E"
+    API_KEY = "TDsus5T6nqDikv70sNR3lkxx6"
+    API_SECRET_KEY = "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp"
+    BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAAFrcgEAAAAAzx0z5tcY43qve6JUby%2BJeU5kCwM%3DkXHXPkdCE7hhnRtfCDr44dBIcNTy25lfPnUqQ3QMklgfpQXJAl"
+    ACCESS_TOKEN = "975213506696855553-T4nK2ZGtevzbt5aHi59P3ejjasZtHof"
+    SECRET_ACCESS_TOKEN = "CsEmqJBTrGFrMwEKjCSwaqXWuW4Y77x5QOXjyeYjfUhd3"
     
     auth = twitter.OAuthHandler(API_KEY,  API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, SECRET_ACCESS_TOKEN)
@@ -49,7 +46,7 @@ def autopostingAkunBackUp():
             media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
 
             auth = twitter.OAuth1UserHandler(
-                "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
+                "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
                 account['access_token'], account['access_token_secret']
             )
             api = twitter.API(auth)
@@ -76,7 +73,7 @@ def autoRepostAkunAyah() :
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
-            "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
+            "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)
@@ -129,8 +126,8 @@ def autopostingTrendingTopik():
         media = API.media_upload("imagePost.png", additional_owners=[accountResult[i][1]])
 
         auth = twitter.OAuth1UserHandler(
-            "l8QEIHkBbb7Zpviv7ggt4XNpi", "eM4Id0y0DiTLT3TJNZ9MDxZOUlx1rt5njK012vdt7RTligP77N",
-            accountResult[i][3], accountResult[i][4]
+            "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
+            account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)
 

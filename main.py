@@ -10,3 +10,4 @@ schedule.every(45).minutes.do(autopostingTrendingTopik)
 while True:
     schedule.run_pending()
     time.sleep(1)
+    print("Bots are running.......")

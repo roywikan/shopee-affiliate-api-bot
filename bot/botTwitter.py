@@ -113,17 +113,17 @@ def autopostingTrendingTopik():
     
     trending = ""
 
-    mycursor = mydb.cursor()
+    mycursor = mydb.cursor(dictionary=True)
     mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup")
     accountResult = mycursor.fetchall()
 
     mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
     database_post = mycursor.fetchall()
 
-    for i in range(len(accountResult)):
+    for account in accountResult:
         random_index = random.randrange(len(database_post))
-        urllib.request.urlretrieve('{}'.format(database_post[random_index][4]), "imagePost.png")
-        media = API.media_upload("imagePost.png", additional_owners=[accountResult[i][1]])
+        urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
+        media = API.media_upload("imagePost.png", additional_owners=[account['id']])
 
         auth = twitter.OAuth1UserHandler(
             "TDsus5T6nqDikv70sNR3lkxx6", "WCBet8FJBVTsTV12MuTv7EBKV56yPqwQctJ4Ga8ekizYkQ6zXp",
@@ -135,11 +135,11 @@ def autopostingTrendingTopik():
             random_index_trending = random.randrange(len(final))
             trending += " " + final[random_index_trending][0]
 
-        statusTweet = "‼ PROMO DISKON ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}\n\ntag:{}".format(database_post[random_index][0], database_post[random_index][2], shortLinkShopee(database_post[random_index][3],accountResult[i][0], accountResult[i][1] , "Twitter" ), trending)
+        statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
         
         try:
             api.update_status(status=statusTweet, media_ids=[media.media_id])
-            print(accountResult[i][2])
+            print(account['username'])
             print("✅ - Posting Berhasil\n")
         except:
             pass

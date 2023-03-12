@@ -152,7 +152,7 @@ def autoRepostNonEleved() :
 
 def autopostingAkunBackUp():
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup")
+    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup where id_shopee = '1'")
     accountResult = mycursor.fetchall()
 
     mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")

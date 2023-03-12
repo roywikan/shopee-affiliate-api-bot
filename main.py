@@ -7,7 +7,7 @@ from bot.botTelegram import *
 from bot.botReplyTwitter import *
 from bot.postVideoTwiiter import * 
 
-Twitter
+# Twitter
 # schedule.every(25).minutes.do(autoposting)
 schedule.every(30).minutes.do(autoRetweetNonEleved)
 # schedule.every(18).minutes.do(autoRepostNonEleved)

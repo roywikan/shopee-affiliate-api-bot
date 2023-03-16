@@ -5,7 +5,7 @@ import urllib.request
 import requests
 import schedule
 import mysql.connector
-import os
+from decouple import config
 
 # Connect Database
 mydb = mysql.connector.connect(
@@ -20,11 +20,11 @@ db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/expor
 
 # API BotTwitter
 def botTwitter():
-    API_KEY = os.environ['API_KEY']
-    API_SECRET_KEY = os.environ['API_SECRET_KEY']
-    BEARER_TOKEN = os.environ['BEARER_TOKEN']
-    ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
-    SECRET_ACCESS_TOKEN = os.environ['SECRET_ACCESS_TOKEN']
+    API_KEY = config('API_KEY')
+    API_SECRET_KEY = config('API_SECRET_KEY')
+    BEARER_TOKEN = config('BEARER_TOKEN')
+    ACCESS_TOKEN = config('ACCESS_TOKEN')
+    SECRET_ACCESS_TOKEN = config('SECRET_ACCESS_TOKEN')
     
     auth = twitter.OAuthHandler(API_KEY,  API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, SECRET_ACCESS_TOKEN)
@@ -100,7 +100,7 @@ def autoRetweetNonEleved():
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
-            os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
+            config('API_KEY'), config('API_SECRET_KEY'),
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)
@@ -167,7 +167,7 @@ def autopostingAkunBackUp():
             media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
 
             auth = twitter.OAuth1UserHandler(
-                os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
+                config('API_KEY'), config('API_SECRET_KEY'),
                 account['access_token'], account['access_token_secret']
             )
             api = twitter.API(auth)
@@ -194,7 +194,7 @@ def autoRepostAkunAyah() :
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
-            os.environ['API_KEY'], os.environ['API_SECRET_KEY'],
+            config('API_KEY'), config('API_SECRET_KEY'),
             account['access_token'], account['access_token_secret']
         )
         api = twitter.API(auth)

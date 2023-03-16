@@ -5,7 +5,7 @@ import urllib.request
 import requests
 import schedule
 import mysql.connector
-import os
+from decouple import config
 
 # Connect Database
 mydb = mysql.connector.connect(
@@ -17,11 +17,11 @@ mydb = mysql.connector.connect(
 
 # API BotTwitter
 def botTwitter():
-    API_KEY = os.environ['API_KEY']
-    API_SECRET_KEY = os.environ['API_SECRET_KEY']
-    BEARER_TOKEN = os.environ['BEARER_TOKEN']
-    ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
-    SECRET_ACCESS_TOKEN = os.environ['SECRET_ACCESS_TOKEN']
+    API_KEY = config('API_KEY')
+    API_SECRET_KEY = config('API_SECRET_KEY')
+    BEARER_TOKEN = config('BEARER_TOKEN')
+    ACCESS_TOKEN = config('ACCESS_TOKEN')
+    SECRET_ACCESS_TOKEN = config('SECRET_ACCESS_TOKEN')
     
     auth = twitter.OAuthHandler(API_KEY,  API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, SECRET_ACCESS_TOKEN)

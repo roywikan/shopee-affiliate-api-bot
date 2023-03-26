@@ -9,10 +9,10 @@ from decouple import config
 
 # Connect Database
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="shopee_aff"
+  host="biofresma.my.id",
+  user="biofresm_shopee_aff",
+  password="Azzukhruf26",
+  database="biofresm_shopee_aff"
 )
 
 idDataBaseItem = '15JVk3QaMzRIzvXGq8KNgUO4i6RFyG12h0BXUKlrFf2Q'
@@ -134,7 +134,7 @@ def autoRepostNonEleved() :
         API = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
         print("Account : {}".format(account['username']))
 
-        totalRetweet = 3
+        totalRetweet = 2
         for index in tweets:
             if totalRetweet != 0:
                 try :

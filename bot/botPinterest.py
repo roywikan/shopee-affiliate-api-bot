@@ -4,10 +4,10 @@ import mysql.connector
 
 # Connect Database
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="shopee_aff"
+  host="biofresma.my.id",
+  user="biofresm_shopee_aff",
+  password="Azzukhruf26",
+  database="biofresm_shopee_aff"
 )
 
 # Login Pinters

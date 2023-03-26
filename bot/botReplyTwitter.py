@@ -7,6 +7,7 @@ import schedule
 import mysql.connector
 from decouple import config
 from bot.database import *
+from function_list import *
 
 userID = "tanyakanrl"
 

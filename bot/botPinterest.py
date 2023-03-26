@@ -2,6 +2,7 @@ import random
 from py3pin.Pinterest import Pinterest
 import mysql.connector
 from bot.database import *
+from function_list import *
 
 # Login Pinters
 pinterest = Pinterest(email='fresmaazz@gmail.com', password='Azzukhruf26', username='id_myfashion', cred_root='cred_root')

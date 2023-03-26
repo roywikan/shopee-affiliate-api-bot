@@ -2,6 +2,7 @@ import random
 import requests
 import mysql.connector
 from bot.database import *
+from function_list import *
 
 # Auto Posting Halaman Facebook
 def autoPostingFacebook():

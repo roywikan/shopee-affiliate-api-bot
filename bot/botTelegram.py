@@ -3,6 +3,7 @@ import random
 import requests
 import mysql.connector
 from bot.database import *
+from function_list import *
 
 def autoPostingTelegram():
   if(funtion('autoPostingTelegram')[0]['is_active'] == 1) :

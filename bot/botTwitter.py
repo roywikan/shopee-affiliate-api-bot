@@ -7,6 +7,7 @@ import schedule
 import mysql.connector
 from decouple import config
 from bot.database import *
+from function_list import *
 
 idDataBaseItem = '15JVk3QaMzRIzvXGq8KNgUO4i6RFyG12h0BXUKlrFf2Q'
 db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/export?format=csv")

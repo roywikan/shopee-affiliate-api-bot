@@ -222,7 +222,7 @@ def autopostingTrendingTopik():
     
     trending = ""
 
-    query = "SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE username='HappyRacun'"
+    query = "SELECT * FROM account_backup WHERE username='HappyRacun'"
     accountResult = db_connection(query)
 
     query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"

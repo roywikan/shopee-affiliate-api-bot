@@ -1,23 +1,15 @@
 import random
 from py3pin.Pinterest import Pinterest
 import mysql.connector
-
-# Connect Database
-mydb = mysql.connector.connect(
-  host="biofresma.my.id",
-  user="biofresm_shopee_aff",
-  password="Azzukhruf26",
-  database="biofresm_shopee_aff"
-)
+from bot.database import *
 
 # Login Pinters
 pinterest = Pinterest(email='fresmaazz@gmail.com', password='Azzukhruf26', username='id_myfashion', cred_root='cred_root')
 
 # Auto Posting Pinterest
 def autoPostingPinterest():
-  mycursor = mydb.cursor(dictionary=True)
-  mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
-  database_post = mycursor.fetchall()
+  query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"
+  database_post = db_connection(query)
 
   random_index = random.randrange(len(database_post))
 
@@ -38,9 +30,8 @@ def autoPostingPinterest():
     pass
 
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
-  mycursor = mydb.cursor(dictionary=True)
-  mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))
-  account_shopee = mycursor.fetchall()
+  query = "SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee)
+  account_shopee = db_connection(query)
 
   from shopee_affiliate import ShopeeAffiliate    
   sa = ShopeeAffiliate(account_shopee[0]['appid'], account_shopee[0]['rahasia'])

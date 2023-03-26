@@ -6,14 +6,7 @@ import requests
 import schedule
 import mysql.connector
 from decouple import config
-
-# Connect Database
-mydb = mysql.connector.connect(
-  host="biofresma.my.id",
-  user="biofresm_shopee_aff",
-  password="Azzukhruf26",
-  database="biofresm_shopee_aff"
-)
+from bot.database import *
 
 idDataBaseItem = '15JVk3QaMzRIzvXGq8KNgUO4i6RFyG12h0BXUKlrFf2Q'
 db = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{idDataBaseItem}/export?format=csv")
@@ -37,12 +30,11 @@ def botTwitter():
 def autoposting():
     print("\n\n🟧 AUTO POSTING\n")
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_eleved")
-    accountResult = mycursor.fetchall()
+    query = "SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_eleved"
+    accountResult = db_connection(query)
 
-    mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
-    database_post = mycursor.fetchall()
+    query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"
+    database_post = db_connection(query)
 
     shopeid =1
 
@@ -76,10 +68,8 @@ def autoRetweetNonEleved():
     userID = "spongebobnfess"
     tweets = botTwitter().user_timeline(screen_name=userID, count=1, tweet_mode='extended')
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1")
-    
-    accountResult = mycursor.fetchall()
+    query = "SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1"
+    accountResult = db_connection(query)
 
     for account in accountResult:
         api = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
@@ -96,8 +86,8 @@ def autoRetweetNonEleved():
             print(e)
     
     # Sementara
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND is_retweet = 1")
-    accountResult = mycursor.fetchall()
+    query = "SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND is_retweet = 1"
+    accountResult = db_connection(query)
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
@@ -126,9 +116,8 @@ def autoRepostNonEleved() :
 
     tweets = botTwitter().user_timeline(screen_name=userIDaccount, count=200, include_rts=False, tweet_mode='extended')
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1")
-    accountResult = mycursor.fetchall()
+    query = "SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1"
+    accountResult = db_connection(query)
 
     for account in accountResult:
         API = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
@@ -152,12 +141,11 @@ def autoRepostNonEleved() :
                 
 
 def autopostingAkunBackUp():
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup where id_shopee = '1' AND is_active = 1")
-    accountResult = mycursor.fetchall()
+    query = "SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup where id_shopee = '1' AND is_active = 1"
+    accountResult = db_connection(query)
 
-    mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
-    database_post = mycursor.fetchall()
+    query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"
+    database_post = db_connection(query)
 
     for account in accountResult:
         random_index = random.randrange(len(database_post))
@@ -189,9 +177,8 @@ def autoRepostAkunAyah() :
     userIDaccount = "masitowae"
     tweets = botTwitter().user_timeline(screen_name=userIDaccount, count=100, include_rts=False, tweet_mode='extended')
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id_shopee, no, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=2 AND username <> 'imamto2003'")
-    accountResult = mycursor.fetchall()
+    query = "SELECT id_shopee, no, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=2 AND username <> 'imamto2003'"
+    accountResult = db_connection(query)
 
     for account in accountResult:
         auth = twitter.OAuth1UserHandler(
@@ -235,12 +222,11 @@ def autopostingTrendingTopik():
     
     trending = ""
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE username='HappyRacun'")
-    accountResult = mycursor.fetchall()
+    query = "SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE username='HappyRacun'"
+    accountResult = db_connection(query)
 
-    mycursor.execute("SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post")
-    database_post = mycursor.fetchall()
+    query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"
+    database_post = db_connection(query)
 
     for account in accountResult:
         random_index = random.randrange(len(database_post))
@@ -267,9 +253,8 @@ def autopostingTrendingTopik():
             pass
         
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))
-    account_shopee = mycursor.fetchall()
+    query = "SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee)
+    account_shopee = db_connection(query)
 
     from shopee_affiliate import ShopeeAffiliate    
     sa = ShopeeAffiliate(account_shopee[0]['appid'], account_shopee[0]['rahasia'])

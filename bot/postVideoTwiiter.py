@@ -6,14 +6,7 @@ import requests
 import schedule
 import mysql.connector
 from decouple import config
-
-# Connect Database
-mydb = mysql.connector.connect(
-  host="biofresma.my.id",
-  user="biofresm_shopee_aff",
-  password="Azzukhruf26",
-  database="biofresm_shopee_aff"
-)
+from bot.database import *
 
 # API BotTwitter
 def botTwitter():
@@ -32,12 +25,11 @@ def botTwitter():
 def postingVideo():
     print("\n\n🟧 AUTO POSTING Video\n ")
 
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_eleved")
-    accountResult = mycursor.fetchall()
+    query = "SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_eleved"
+    accountResult = db_connection(query)
 
-    mycursor.execute("SELECT name, price, discount, rating, product_url, video_url, img_url FROM product_video")
-    database_post = mycursor.fetchall()
+    query = "SELECT name, price, discount, rating, product_url, video_url, img_url FROM product_video"
+    database_post = db_connection(query)
 
     shopeid =1
 
@@ -67,9 +59,8 @@ def postingVideo():
             pass
         
 def shortLinkShopee(link, idshopee, akun, sosialmedia):
-    mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee))
-    account_shopee = mycursor.fetchall()
+    query = "SELECT id, appid, rahasia FROM account_shopeeaff WHERE id={}".format(idshopee)
+    account_shopee = db_connection(query)
 
     from shopee_affiliate import ShopeeAffiliate    
     sa = ShopeeAffiliate(account_shopee[0]['appid'], account_shopee[0]['rahasia'])

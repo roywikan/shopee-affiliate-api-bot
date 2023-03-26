@@ -10,7 +10,7 @@ from bot.postVideoTwiiter import *
 # Twitter
 schedule.every(25).minutes.do(autoposting)
 schedule.every(30).minutes.do(autoRetweetNonEleved)
-schedule.every(18).minutes.do(autoRepostNonEleved)
+schedule.every(30).minutes.do(autoRepostNonEleved)
 schedule.every(25).minutes.do(autopostingAkunBackUp)
 # schedule.every(20).minutes.do(autoRepostAkunAyah)
 schedule.every(45).minutes.do(autopostingTrendingTopik)

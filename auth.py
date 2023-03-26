@@ -55,5 +55,5 @@ oauth = OAuth1Session(
     resource_owner_secret=access_token_secret,
 )
 
-print(access_token)
-print(access_token_secret)
+print('Access Token : ', access_token)
+print('Access Token Secret: ',access_token_secret)

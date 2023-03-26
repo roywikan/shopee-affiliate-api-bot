@@ -77,7 +77,8 @@ def autoRetweetNonEleved():
     tweets = botTwitter().user_timeline(screen_name=userID, count=1, tweet_mode='extended')
 
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved")
+    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1")
+    
     accountResult = mycursor.fetchall()
 
     for account in accountResult:
@@ -95,7 +96,7 @@ def autoRetweetNonEleved():
             print(e)
     
     # Sementara
-    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND username='sarhagthang' OR username='Donni_darwin' OR username='alviliaa_' OR username='aqillaaurelliaa' OR username='cantika_vela' OR username='HappyRacun' OR username='aneisha_4'")
+    mycursor.execute("SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup WHERE id_shopee=1 AND is_retweet = 1")
     accountResult = mycursor.fetchall()
 
     for account in accountResult:
@@ -126,7 +127,7 @@ def autoRepostNonEleved() :
     tweets = botTwitter().user_timeline(screen_name=userIDaccount, count=200, include_rts=False, tweet_mode='extended')
 
     mycursor = mydb.cursor(dictionary=True)
-    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE username <> 'yusiedaynti' AND username <> '_firzaamanda' AND username <> 'vidyaisvara' AND username <> 'zannakirana_'")
+    mycursor.execute("SELECT username, API_KEY, API_SECRET_KEY, BEARER_TOKEN, ACCESS_TOKEN, SECRET_ACCESS_TOKEN FROM account_non_eleved WHERE is_retweet = 1")
     accountResult = mycursor.fetchall()
 
     for account in accountResult:

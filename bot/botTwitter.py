@@ -83,10 +83,10 @@ def autoRetweetNonEleved():
 
     for account in accountResult:
         api = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
-        print("Account : {}".format(account['username']))
+        # print("Account : {}".format(account['username']))
 
-        for info in tweets[:1]:
-            print("ID : {}".format(info.id))
+        # for info in tweets[:1]:
+        #     print("ID : {}".format(info.id))
 
         try:
             api.retweet(tweet_id=info.id)
@@ -106,10 +106,10 @@ def autoRetweetNonEleved():
         )
         api = twitter.API(auth)
 
-        print("Account : {}".format(account['username']))
+        # print("Account : {}".format(account['username']))
 
-        for info in tweets[:1]:
-            print("ID : {}".format(info.id))
+        # for info in tweets[:1]:
+        #     print("ID : {}".format(info.id))
 
         try:
             api.retweet(id=info.id)
@@ -132,7 +132,7 @@ def autoRepostNonEleved() :
 
     for account in accountResult:
         API = twitter.Client(bearer_token=account['BEARER_TOKEN'], consumer_key=account['API_KEY'], consumer_secret=account['API_SECRET_KEY'], access_token=account['ACCESS_TOKEN'], access_token_secret=account['SECRET_ACCESS_TOKEN'])
-        print("Account : {}".format(account['username']))
+        # print("Account : {}".format(account['username']))
 
         totalRetweet = 2
         for index in tweets:
@@ -177,7 +177,7 @@ def autopostingAkunBackUp():
 
             try:
                 api.update_status(status=statusTweet, media_ids=[media.media_id])
-                print(account['username'])
+                # print(account['username'])
                 print("✅ - Posting Berhasil\n")
             except:
                 pass   
@@ -200,7 +200,7 @@ def autoRepostAkunAyah() :
         )
         api = twitter.API(auth)
 
-        print("Account : {}".format(account['username']))
+        # print("Account : {}".format(account['username']))
 
         totalRetweet = 2
         for index in tweets:
@@ -261,7 +261,7 @@ def autopostingTrendingTopik():
         
         try:
             api.update_status(status=statusTweet, media_ids=[media.media_id])
-            print(account['username'])
+            # print(account['username'])
             print("✅ - Posting Berhasil\n")
         except:
             pass

@@ -141,7 +141,7 @@ def autoRepostNonEleved() :
                 
 
 def autopostingAkunBackUp():
-    query = "SELECT id_shopee, id, username, access_token, access_token_secret FROM account_backup where id_shopee = '1' AND is_active = 1"
+    query = "SELECT * FROM account_backup where id_shopee = '1' AND is_active = 1"
     accountResult = db_connection(query)
 
     query = "SELECT product_name, product_price, product_rating, product_link, product_img FROM database_post"
@@ -153,7 +153,7 @@ def autopostingAkunBackUp():
         try:
             urllib.request.urlretrieve('{}'.format(database_post[random_index]['product_img']), "imagePost.png")
                 
-            media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id']])
+            media = botTwitter().media_upload("imagePost.png", additional_owners=[account['id_twitter']])
 
             auth = twitter.OAuth1UserHandler(
                 config('API_KEY'), config('API_SECRET_KEY'),
@@ -161,7 +161,7 @@ def autopostingAkunBackUp():
             )
             api = twitter.API(auth)
 
-            statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id'] , "Twitter" ))
+            statusTweet = "‼ FLASH SALE ‼\n\n{}\n\n⛔️ DISKON : {}\n\nCheckout Sekarang 👇\n{}".format(database_post[random_index]['product_name'], database_post[random_index]['product_rating'], shortLinkShopee(database_post[random_index]['product_link'],account['id_shopee'], account['id_twitter'] , "Twitter" ))
 
             try:
                 api.update_status(status=statusTweet, media_ids=[media.media_id])
